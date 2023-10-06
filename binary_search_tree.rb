@@ -35,15 +35,16 @@ class Tree
     current_node = self.root
     # traverse nodes until reaching leaf
     loop do
+      puts current_node.data
       if value == current_node.data
         puts 'Duplicate value found - node not inserted.'
         return
       elsif value < current_node.data
-        if current_node.left.nil? && current_node.right.nil? then break end
+        if current_node.left.nil? then break end
 
         current_node = current_node.left
       elsif value > current_node.data
-        if current_node.left.nil? && current_node.right.nil? then break end
+        if current_node.right.nil? then break end
 
         current_node = current_node.right
       end
@@ -75,6 +76,10 @@ class Tree
               current_node.left = current_node.left.left
             end
             break
+          # delete node with 2 children (find next biggest - look in right subtree, replace node to be deleted with left subtree of furthest right node)
+          else
+          
+            break
           end
         end
         current_node = current_node.left
@@ -92,6 +97,10 @@ class Tree
               current_node.right = current_node.right.left
             end
             break
+          # delete node with 2 children
+          else
+
+            break
           end
         end
         current_node = current_node.right
@@ -107,10 +116,10 @@ class Tree
 end
 
 new_tree = Tree.new
-array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+array = [20, 30, 32, 34, 36, 40, 50, 60, 65, 66, 70, 75, 80, 85]
 new_tree.build_tree(array, 0, array.length - 1)
+new_tree.pretty_print
+new_tree.insert(31)
+new_tree.pretty_print
+# new_tree.delete(60)
 # new_tree.pretty_print
-new_tree.insert(5)
-new_tree.pretty_print
-new_tree.delete(8)
-new_tree.pretty_print
