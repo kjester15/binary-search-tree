@@ -60,16 +60,27 @@ class Tree
     current_node = self.root
     # traverse nodes until reaching leaf
     loop do
-      if value == current_node.data
-        puts 'Found node to delete.'
-        return
-      elsif value < current_node.data
-        if current_node.left.nil? && current_node.right.nil? then break end
+      if value < current_node.data
+        # delete leaf
+        if value == current_node.left.data
+          if current_node.left.left.nil? && current_node.left.right.nil?
+            current_node.left = nil
+            break
+          end
+        end
+        # delete node with 1 child
 
         current_node = current_node.left
       elsif value > current_node.data
-        if current_node.left.nil? && current_node.right.nil? then break end
-
+        # delete leaf
+        if value == current_node.right.data
+          if current_node.right.left.nil? && current_node.right.right.nil?
+            current_node.right = nil
+            break
+          end
+        end
+        # delete node with 1 child
+        
         current_node = current_node.right
       end
     end
@@ -89,3 +100,4 @@ new_tree.build_tree(array, 0, array.length - 1)
 new_tree.insert(5)
 new_tree.pretty_print
 new_tree.delete(7)
+new_tree.pretty_print
