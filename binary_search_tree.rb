@@ -60,27 +60,40 @@ class Tree
     current_node = self.root
     # traverse nodes until reaching leaf
     loop do
+      puts current_node.data
       if value < current_node.data
-        # delete leaf
+        # delete leaf - DONE
         if value == current_node.left.data
           if current_node.left.left.nil? && current_node.left.right.nil?
             current_node.left = nil
             break
-          end
-        end
-        # delete node with 1 child
-
-        current_node = current_node.left
-      elsif value > current_node.data
-        # delete leaf
-        if value == current_node.right.data
-          if current_node.right.left.nil? && current_node.right.right.nil?
-            current_node.right = nil
+          # delete node with 1 child
+          elsif current_node.left.left.nil? || current_node.left.right.nil?
+            if current_node.left.left.nil?
+              current_node.left = current_node.left.right
+            else
+              current_node.left = current_node.left.left
+            end
             break
           end
         end
-        # delete node with 1 child
-        
+        current_node = current_node.left
+      elsif value > current_node.data
+        if value == current_node.right.data
+          # delete leaf - DONE
+          if current_node.right.left.nil? && current_node.right.right.nil?
+            current_node.right = nil
+            break
+          # delete node with 1 child
+          elsif current_node.right.left.nil? || current_node.right.right.nil?
+            if current_node.right.left.nil?
+              current_node.right = current_node.right.right
+            else
+              current_node.right = current_node.right.left
+            end
+            break
+          end
+        end
         current_node = current_node.right
       end
     end
@@ -99,5 +112,5 @@ new_tree.build_tree(array, 0, array.length - 1)
 # new_tree.pretty_print
 new_tree.insert(5)
 new_tree.pretty_print
-new_tree.delete(7)
+new_tree.delete(8)
 new_tree.pretty_print
