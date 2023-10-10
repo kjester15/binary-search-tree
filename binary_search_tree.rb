@@ -32,8 +32,13 @@ class Tree
   end
 
   def insert(value, node = root)
-    # return new node if tree is empty
+    # return nil if node exists
     return nil if value == node.data
+
+    # create a new node with value if tree has no root node
+    if node.nil?
+      Node.new(value)
+    end
 
     # if not empty, recursively find end of tree
     if value < node.data
@@ -43,28 +48,33 @@ class Tree
     end
   end
 
-  def delete(value)
-    # root = self.root
+  def delete(value, node = root)
+    # base case - return root if node is nil
+    if node.nil?
+      node
+    end
 
-    # if root.nil?
-    #   return root
-    # end
+    # recursively find node to delete
+    if node.data > value
+      node.left = delete(value, node.left)
+      return node
+    elsif node.data < value
+      node.right = delete(value, node.right)
+      return node
+    end
 
-    # if value > root.data
-    #   root.right = delete(value)
-    #   return root
-    # elsif value < root.data
-    #   root.left = root.left.delete(value)
-    #   return root
-    # end
+    # if one child is empty
+    if node.left.nil?
+      temp = node.right
+      node = nil
+      return temp
+    elsif node.right.nil?
+      temp = node.left
+      node = nil
+      return temp
+    end
 
-    # if root.left.nil?
-    #   temp = root.right
-    #   return temp
-    # elsif root.right.nil?
-    #   temp = root.left
-    #   return temp
-    # end
+    # if both children exist
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -79,5 +89,5 @@ array = [20, 30, 35, 40, 50, 60, 65, 70, 75, 80, 85, 90]
 new_tree.build_tree(array, 0, array.length - 1)
 new_tree.insert(76)
 new_tree.pretty_print
-# new_tree.delete(70)
-# new_tree.pretty_print
+new_tree.delete(40)
+new_tree.pretty_print
