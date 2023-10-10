@@ -31,81 +31,40 @@ class Tree
     @root
   end
 
-  def insert(value)
-    current_node = self.root
-    # traverse nodes until reaching leaf
-    loop do
-      puts current_node.data
-      if value == current_node.data
-        puts 'Duplicate value found - node not inserted.'
-        return
-      elsif value < current_node.data
-        if current_node.left.nil? then break end
+  def insert(value, node = root)
+    # return new node if tree is empty
+    return nil if value == node.data
 
-        current_node = current_node.left
-      elsif value > current_node.data
-        if current_node.right.nil? then break end
-
-        current_node = current_node.right
-      end
-    end
-    # create node on appropriate side of leaf
-    if value < current_node.data
-      current_node.left = Node.new(value)
+    # if not empty, recursively find end of tree
+    if value < node.data
+      node.left.nil? ? node.left = Node.new(value) : insert(value, node.left)
     else
-      current_node.right = Node.new(value)
+      node.right.nil? ? node.right = Node.new(value) : insert(value, node.right)
     end
   end
 
   def delete(value)
-    current_node = self.root
-    # traverse nodes until reaching leaf
-    loop do
-      puts current_node.data
-      if value < current_node.data
-        # delete leaf - DONE
-        if value == current_node.left.data
-          if current_node.left.left.nil? && current_node.left.right.nil?
-            current_node.left = nil
-            break
-          # delete node with 1 child
-          elsif current_node.left.left.nil? || current_node.left.right.nil?
-            if current_node.left.left.nil?
-              current_node.left = current_node.left.right
-            else
-              current_node.left = current_node.left.left
-            end
-            break
-          # delete node with 2 children (find next biggest - look in right subtree, replace node to be deleted with left subtree of furthest right node)
-          else
-          
-            break
-          end
-        end
-        current_node = current_node.left
-      elsif value > current_node.data
-        if value == current_node.right.data
-          # delete leaf - DONE
-          if current_node.right.left.nil? && current_node.right.right.nil?
-            current_node.right = nil
-            break
-          # delete node with 1 child
-          elsif current_node.right.left.nil? || current_node.right.right.nil?
-            if current_node.right.left.nil?
-              current_node.right = current_node.right.right
-            else
-              current_node.right = current_node.right.left
-            end
-            break
-          # delete node with 2 children
-          else
+    # root = self.root
 
-            break
-          end
-        end
-        current_node = current_node.right
-      end
-    end
+    # if root.nil?
+    #   return root
+    # end
+
+    # if value > root.data
+    #   root.right = delete(value)
+    #   return root
+    # elsif value < root.data
+    #   root.left = root.left.delete(value)
+    #   return root
+    # end
+
+    # if root.left.nil?
+    #   temp = root.right
+    #   return temp
+    # elsif root.right.nil?
+    #   temp = root.left
+    #   return temp
+    # end
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -116,10 +75,9 @@ class Tree
 end
 
 new_tree = Tree.new
-array = [20, 30, 32, 34, 36, 40, 50, 60, 65, 66, 70, 75, 80, 85]
+array = [20, 30, 35, 40, 50, 60, 65, 70, 75, 80, 85, 90]
 new_tree.build_tree(array, 0, array.length - 1)
+new_tree.insert(76)
 new_tree.pretty_print
-new_tree.insert(31)
-new_tree.pretty_print
-# new_tree.delete(60)
+# new_tree.delete(70)
 # new_tree.pretty_print
