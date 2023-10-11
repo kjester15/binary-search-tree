@@ -72,9 +72,29 @@ class Tree
       temp = node.left
       node = nil
       return temp
-    end
-
     # if both children exist
+    else
+      successor_parent = node
+      # find successor
+      successor = node.right
+      while !successor.left.nil?
+        successor_parent = successor
+        successor = successor.left
+      end
+
+      if successor_parent != node
+        successor_parent.left = successor.right
+      else
+        successor_parent.right = successor.right
+      end
+
+      # copy successor data to root
+      node.data = successor.data
+
+      # delete successor and return root
+      successor = nil
+      node
+    end
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -89,5 +109,5 @@ array = [20, 30, 35, 40, 50, 60, 65, 70, 75, 80, 85, 90]
 new_tree.build_tree(array, 0, array.length - 1)
 new_tree.insert(76)
 new_tree.pretty_print
-new_tree.delete(40)
+new_tree.delete(60)
 new_tree.pretty_print
