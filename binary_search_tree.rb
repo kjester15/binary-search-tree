@@ -77,6 +77,7 @@ class Tree
       successor_parent = node
       # find successor
       successor = node.right
+      # while loop traverses left down right subtree until no further left options
       while !successor.left.nil?
         successor_parent = successor
         successor = successor.left
@@ -97,6 +98,25 @@ class Tree
     end
   end
 
+  def find(value, node = root)
+    # base case
+    if node.nil?
+      nil
+    end
+
+    # recursively find node to delete
+    if node.data > value
+      found_node = find(value, node.left)
+      return found_node
+    elsif node.data < value
+      found_node = find(value, node.right)
+      return found_node
+    end
+
+    # return node if found, otherwise nil
+    node.data == value ? node : nil
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -108,6 +128,7 @@ new_tree = Tree.new
 array = [20, 30, 35, 40, 50, 60, 65, 70, 75, 80, 85, 90]
 new_tree.build_tree(array, 0, array.length - 1)
 new_tree.insert(76)
+# new_tree.pretty_print
+new_tree.delete(35)
 new_tree.pretty_print
-new_tree.delete(60)
-new_tree.pretty_print
+puts new_tree.find(65).data
