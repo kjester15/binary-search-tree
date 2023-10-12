@@ -117,6 +117,45 @@ class Tree
     node.data == value ? node : nil
   end
 
+  def level_order_iterate
+    # iteration method
+    return nil if self.root.nil?
+
+    current_node = self.root
+    queue = [current_node]
+    values = []
+    loop do
+      values << queue[0].data
+      queue.shift
+      unless current_node.left.nil? then queue << current_node.left end
+
+      unless current_node.right.nil? then queue << current_node.right end
+
+      current_node = queue[0]
+      break if queue.empty?
+    end
+
+    values
+  end
+
+  def level_order_recursive(queue = [root], values = [], node = root)
+    # recursion method
+    # base case
+    return if queue.empty?
+
+    values << queue[0].data
+    queue.shift
+
+    unless node.left.nil? then queue << node.left end
+    unless node.right.nil? then queue << node.right end
+
+    unless queue.empty?
+      level_order_recursive(queue, values, queue[0])
+    end
+
+    values
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -131,4 +170,6 @@ new_tree.insert(76)
 # new_tree.pretty_print
 new_tree.delete(35)
 new_tree.pretty_print
-puts new_tree.find(65).data
+puts new_tree.find(65)
+p new_tree.level_order_iterate
+p new_tree.level_order_recursive
