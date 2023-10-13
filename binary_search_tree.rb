@@ -176,6 +176,16 @@ class Tree
     values
   end
 
+  def postorder(values = [], node = root)
+    if node.nil? then return end
+
+    postorder(values, node.left)
+    postorder(values, node.right)
+    values << node.data
+
+    values
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -195,3 +205,4 @@ p new_tree.level_order_iterate
 p new_tree.level_order_recursive
 p new_tree.inorder
 p new_tree.preorder
+p new_tree.postorder
