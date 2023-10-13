@@ -166,6 +166,16 @@ class Tree
     values
   end
 
+  def preorder(values = [], node = root)
+    if node.nil? then return end
+
+    values << node.data
+    preorder(values, node.left)
+    preorder(values, node.right)
+
+    values
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -184,3 +194,4 @@ puts new_tree.find(65)
 p new_tree.level_order_iterate
 p new_tree.level_order_recursive
 p new_tree.inorder
+p new_tree.preorder
