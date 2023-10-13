@@ -186,15 +186,15 @@ class Tree
     values
   end
 
-  def height(node = root, value, count)
+  def depth(node = root, value, count)
     if node.nil? then return end
 
     if value < node.data
       count += 1
-      height(node.left, value, count)
+      depth(node.left, value, count)
     elsif value > node.data
       count += 1
-      height(node.right, value, count)
+      depth(node.right, value, count)
     elsif value == node.data
       count
     end
@@ -220,4 +220,4 @@ p new_tree.level_order_recursive
 p new_tree.inorder
 p new_tree.preorder
 p new_tree.postorder
-puts new_tree.height(76, 0)
+puts new_tree.depth(76, 0)
