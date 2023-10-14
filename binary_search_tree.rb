@@ -195,17 +195,25 @@ class Tree
     [left_height, right_height].max + 1
   end
 
-  def depth(node = @root, value, count)
+  def depth(value, node = @root, count = 0)
     if node.nil? then return end
 
     if value < node.data
       count += 1
-      depth(node.left, value, count)
+      depth(value, node.left, count)
     elsif value > node.data
       count += 1
-      depth(node.right, value, count)
+      depth(value, node.right, count)
     elsif value == node.data
       count
+    end
+  end
+
+  def balanced?(node = @root)
+    if height(node.left.data) - height(node.right.data) <= 1
+      true
+    else
+      false
     end
   end
 
@@ -229,5 +237,6 @@ new_tree.pretty_print
 # p new_tree.inorder
 # p new_tree.preorder
 # p new_tree.postorder
-puts new_tree.depth(80, 0)
-puts new_tree.height(76)
+puts new_tree.depth(80)
+# puts new_tree.height(76)
+puts new_tree.balanced?
