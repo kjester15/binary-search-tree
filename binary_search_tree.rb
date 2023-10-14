@@ -186,28 +186,16 @@ class Tree
     values
   end
 
-  def height(node = @root, count = 0, left = 0, right = 0, pass = true)
+  def height(node = @root, left = 0, right = 0)
     if node.nil? then return end
-    # find the specified node
-    # if pass == true
-    #   if value < node.data
-    #     height(value, node.left)
-    #   elsif value > node.data
-    #     height(value, node.right)
-    #   else
-    #     pass = false
-    #     puts "found node"
-    #     height(value, node.right, pass)
-    #   end
-    # end
     # track size of left and right sides
     unless node.left.nil?
       left += 1
-      left += height(node.left, pass)
+      left += height(node.left)
     end
     unless node.right.nil?
       right += 1
-      right += height(node.right, pass)
+      right += height(node.right)
     end
     # return greater of two sides
     if left > right
