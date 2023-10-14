@@ -104,7 +104,7 @@ class Tree
       nil
     end
 
-    # recursively find node to delete
+    # recursively find node
     if node.data > value
       found_node = find(value, node.left)
       return found_node
@@ -186,12 +186,11 @@ class Tree
     values
   end
 
-  def height(value = 0, node = @root)
+  def height(value = 0, node = find(value), pass = nil)
     if node.nil? then return -1 end
-
     # track size of left and right sides
-    left_height = height(value, node.left)
-    right_height = height(value, node.right)
+    left_height = height(value, node.left, pass)
+    right_height = height(value, node.right, pass)
     # return greater of two sides
     [left_height, right_height].max + 1
   end
@@ -224,11 +223,11 @@ new_tree.insert(76)
 # new_tree.pretty_print
 new_tree.delete(35)
 new_tree.pretty_print
-puts new_tree.find(65)
-p new_tree.level_order_iterate
-p new_tree.level_order_recursive
-p new_tree.inorder
-p new_tree.preorder
-p new_tree.postorder
+# puts new_tree.find(65)
+# p new_tree.level_order_iterate
+# p new_tree.level_order_recursive
+# p new_tree.inorder
+# p new_tree.preorder
+# p new_tree.postorder
 puts new_tree.depth(80, 0)
-puts new_tree.height
+puts new_tree.height(76)
