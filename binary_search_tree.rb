@@ -31,7 +31,7 @@ class Tree
     @root
   end
 
-  def insert(value, node = root)
+  def insert(value, node = @root)
     # return nil if node exists
     return nil if value == node.data
 
@@ -48,7 +48,7 @@ class Tree
     end
   end
 
-  def delete(value, node = root)
+  def delete(value, node = @root)
     # base case - return root if node is nil
     if node.nil?
       node
@@ -98,7 +98,7 @@ class Tree
     end
   end
 
-  def find(value, node = root)
+  def find(value, node = @root)
     # base case
     if node.nil?
       nil
@@ -138,7 +138,7 @@ class Tree
     values
   end
 
-  def level_order_recursive(queue = [root], values = [], node = root)
+  def level_order_recursive(queue = [root], values = [], node = @root)
     # recursion method
     # base case
     return if queue.empty?
@@ -156,7 +156,7 @@ class Tree
     values
   end
 
-  def inorder(values = [], node = root)
+  def inorder(values = [], node = @root)
     if node.nil? then return end
 
     inorder(values, node.left)
@@ -166,7 +166,7 @@ class Tree
     values
   end
 
-  def preorder(values = [], node = root)
+  def preorder(values = [], node = @root)
     if node.nil? then return end
 
     values << node.data
@@ -176,7 +176,7 @@ class Tree
     values
   end
 
-  def postorder(values = [], node = root)
+  def postorder(values = [], node = @root)
     if node.nil? then return end
 
     postorder(values, node.left)
@@ -186,7 +186,40 @@ class Tree
     values
   end
 
-  def depth(node = root, value, count)
+  def height(node = @root, count = 0, left = 0, right = 0, pass = true)
+    if node.nil? then return end
+    # find the specified node
+    # if pass == true
+    #   if value < node.data
+    #     height(value, node.left)
+    #   elsif value > node.data
+    #     height(value, node.right)
+    #   else
+    #     pass = false
+    #     puts "found node"
+    #     height(value, node.right, pass)
+    #   end
+    # end
+    # track size of left and right sides
+    unless node.left.nil?
+      left += 1
+      left += height(node.left, pass)
+    end
+    unless node.right.nil?
+      right += 1
+      right += height(node.right, pass)
+    end
+    # return greater of two sides
+    if left > right
+      left
+    elsif right > left
+      right
+    else
+      left
+    end
+  end
+
+  def depth(node = @root, value, count)
     if node.nil? then return end
 
     if value < node.data
@@ -220,4 +253,5 @@ p new_tree.level_order_recursive
 p new_tree.inorder
 p new_tree.preorder
 p new_tree.postorder
-puts new_tree.depth(76, 0)
+puts new_tree.depth(80, 0)
+puts new_tree.height
