@@ -186,25 +186,14 @@ class Tree
     values
   end
 
-  def height(node = @root, left = 0, right = 0)
-    if node.nil? then return end
+  def height(value = 0, node = @root)
+    if node.nil? then return -1 end
+
     # track size of left and right sides
-    unless node.left.nil?
-      left += 1
-      left += height(node.left)
-    end
-    unless node.right.nil?
-      right += 1
-      right += height(node.right)
-    end
+    left_height = height(value, node.left)
+    right_height = height(value, node.right)
     # return greater of two sides
-    if left > right
-      left
-    elsif right > left
-      right
-    else
-      left
-    end
+    [left_height, right_height].max + 1
   end
 
   def depth(node = @root, value, count)
