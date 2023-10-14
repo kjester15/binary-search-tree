@@ -219,6 +219,11 @@ class Tree
     end
   end
 
+  def rebalance
+    array = self.inorder
+    @root = build_tree(array, 0, array.length - 1)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -230,6 +235,7 @@ new_tree = Tree.new
 array = [20, 30, 35, 40, 50, 60, 65, 70, 75, 80, 85, 90]
 new_tree.build_tree(array, 0, array.length - 1)
 new_tree.insert(76)
+new_tree.insert(77)
 # new_tree.pretty_print
 new_tree.delete(35)
 new_tree.pretty_print
@@ -241,4 +247,7 @@ new_tree.pretty_print
 # p new_tree.postorder
 # puts new_tree.depth(80)
 # puts new_tree.height(76)
+puts new_tree.balanced?
+new_tree.rebalance
+new_tree.pretty_print
 puts new_tree.balanced?
