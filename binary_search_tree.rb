@@ -210,7 +210,9 @@ class Tree
   end
 
   def balanced?(node = @root)
-    if height(node.left.data) - height(node.right.data) <= 1
+    left_height = height(node.left.data)
+    right_height = height(node.right.data)
+    if (left_height - right_height).abs < 2
       true
     else
       false
@@ -237,6 +239,6 @@ new_tree.pretty_print
 # p new_tree.inorder
 # p new_tree.preorder
 # p new_tree.postorder
-puts new_tree.depth(80)
+# puts new_tree.depth(80)
 # puts new_tree.height(76)
 puts new_tree.balanced?
