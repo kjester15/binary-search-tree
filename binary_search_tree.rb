@@ -15,18 +15,18 @@ end
 class Tree
   attr_accessor :root, :array
 
-  def initialize
+  def initialize(array)
     @root = nil
-    @array = nil
+    @array = array.sort.uniq
   end
 
-  def build_tree(array, start_point, end_point)
+  def build_tree(array = @array, start_point = 0, end_point = array.length - 1)
     if start_point > end_point then return end
 
     mid_point = (start_point + end_point) / 2
     @root = Node.new(array[mid_point])
-    @root.left = Tree.new.build_tree(array, start_point, mid_point - 1)
-    @root.right = Tree.new.build_tree(array, mid_point + 1, end_point)
+    @root.left = Tree.new(array).build_tree(array, start_point, mid_point - 1)
+    @root.right = Tree.new(array).build_tree(array, mid_point + 1, end_point)
 
     @root
   end
@@ -231,23 +231,39 @@ class Tree
   end
 end
 
-new_tree = Tree.new
-array = [20, 30, 35, 40, 50, 60, 65, 70, 75, 80, 85, 90]
-new_tree.build_tree(array, 0, array.length - 1)
-new_tree.insert(76)
-new_tree.insert(77)
-# new_tree.pretty_print
-new_tree.delete(35)
-new_tree.pretty_print
-# puts new_tree.find(65)
-# p new_tree.level_order_iterate
-# p new_tree.level_order_recursive
-# p new_tree.inorder
-# p new_tree.preorder
-# p new_tree.postorder
-# puts new_tree.depth(80)
-# puts new_tree.height(76)
-puts new_tree.balanced?
-new_tree.rebalance
-new_tree.pretty_print
-puts new_tree.balanced?
+# Create a binary search tree from an array of random numbers
+array = (Array.new(15) { rand(1..100) }).sort
+binary_search_tree = Tree.new(array)
+binary_search_tree.build_tree
+binary_search_tree.pretty_print
+
+# Confirm that the tree is balanced by calling #balanced?
+puts "Balanced?: #{binary_search_tree.balanced?}"
+
+# Print out all elements in level, pre, post, and in order
+p "Level: #{binary_search_tree.level_order_recursive}"
+p "Inorder: #{binary_search_tree.inorder}"
+p "Preorder: #{binary_search_tree.preorder}"
+p "Postorder: #{binary_search_tree.postorder}"
+
+# Unbalance the tree by adding several numbers > 100
+5.times do
+  binary_search_tree.insert(rand(100..200))
+end
+binary_search_tree.pretty_print
+
+# Confirm that the tree is unbalanced by calling #balanced?
+puts "Balanced?: #{binary_search_tree.balanced?}"
+
+# Balance the tree by calling #rebalance
+binary_search_tree.rebalance
+binary_search_tree.pretty_print
+
+# Confirm that the tree is balanced by calling #balanced?
+puts "Balanced?: #{binary_search_tree.balanced?}"
+
+# Print out all elements in level, pre, post, and in order
+p "Level: #{binary_search_tree.level_order_recursive}"
+p "Inorder: #{binary_search_tree.inorder}"
+p "Preorder: #{binary_search_tree.preorder}"
+p "Postorder: #{binary_search_tree.postorder}"
