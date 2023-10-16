@@ -8,8 +8,6 @@ class Node
     @left = nil
     @right = nil
   end
-
-  # include comparable module
 end
 
 class Tree
