@@ -184,11 +184,11 @@ class Tree
     values
   end
 
-  def height(value = 0, node = find(value), pass = nil)
+  def height(value = 0, node = find(value))
     if node.nil? then return -1 end
     # track size of left and right sides
-    left_height = height(value, node.left, pass)
-    right_height = height(value, node.right, pass)
+    left_height = height(value, node.left)
+    right_height = height(value, node.right)
     # return greater of two sides
     [left_height, right_height].max + 1
   end
